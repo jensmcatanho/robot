@@ -1,23 +1,10 @@
-#include <iostream>
-#include <memory>
-
-#include "GL/glut.h"
-#include "Window.h"
-
-void draw();
+#include "Core.h"
 
 int main(int argc, char **argv) {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	auto core = std::make_shared<Core>();
 
-	auto window = std::make_shared<Window>(argc, argv);
-	window->Create("Mr. Robot", 1024, 768);
-
-	window->SetDisplayCallback(draw);
-	glutMainLoop();
+	core->Setup();
+	core->Run();
 
 	return 0;
-}
-
-void draw() {
-	glClear(GL_COLOR_BUFFER_BIT);
 }

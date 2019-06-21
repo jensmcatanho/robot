@@ -3,25 +3,55 @@
 
 #include <string>
 
-#include <GL/glut.h>
+#include "GLFW\glfw3.h"
 
 class Window {
 	public:
-		Window(int argc, char **argv);
+		Window(std::string title, GLint width, GLint height);
 
-		bool Create(std::string title, int width, int height);
+		GLboolean Create();
+
+		GLFWwindow* GetPointer() const;
+
+		void PollEvents() const;
 
 		void SwapBuffers() const;
 
-		void SetDisplayCallback(void callback());
+		GLboolean ShouldClose() const;
+
+		void Close();
+
+	private:
+		GLFWwindow *m_Window;
+
+		std::string m_Title;
+
+		int m_Width;
+
+		int m_Height;
+
+		GLfloat m_AspectRatio;
 };
 
-inline void Window::SwapBuffers() const {
-	glutSwapBuffers();
+inline GLFWwindow* Window::GetPointer() const {
+	return m_Window;
 }
 
-inline void Window::SetDisplayCallback(void callback()) {
-	glutDisplayFunc(callback);
+inline void Window::PollEvents() const {
+	glfwPollEvents();
+}
+
+inline void Window::SwapBuffers() const {
+	glfwSwapBuffers(m_Window);
+}
+
+inline GLboolean Window::ShouldClose() const {
+	return glfwWindowShouldClose(m_Window);
+}
+
+inline void Window::Close() {
+	glfwDestroyWindow(m_Window);
+	glfwTerminate();
 }
 
 #endif

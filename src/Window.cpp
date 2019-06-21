@@ -1,13 +1,28 @@
 #include "Window.h"
 
-Window::Window(int argc, char **argv) {
-	glutInit(&argc, argv);
+#include <iostream>
+
+Window::Window(std::string title, GLint width, GLint height) :
+	m_Title(title),
+	m_Width(width),
+	m_Height(height),
+	m_AspectRatio(static_cast<GLfloat>(width/height)) {
+
 }
 
-bool Window::Create(std::string title, int width, int height) {
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glutInitWindowSize(width, height);
-	glutCreateWindow(title.c_str());
+GLboolean Window::Create() {
+	if (!glfwInit()) {
+		std::cout << "Error: GLFW failed to initialize. Try again." << std::endl;
+		return GL_FALSE;
+	}
 
-	return true;
+	std::cout << "Info: GLFW initialized." << std::endl;
+
+	glfwWindowHint(GLFW_SAMPLES, 4);
+	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+	
+	glfwMakeContextCurrent(m_Window);
+	glfwSetWindowUserPointer(m_Window, this);
+
+	return GL_TRUE;
 }
