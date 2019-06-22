@@ -7,6 +7,7 @@ class Window;
 #include <iostream>
 #include <memory>
 #include <string>
+#include <sstream>
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>

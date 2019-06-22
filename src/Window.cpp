@@ -24,3 +24,21 @@ GLboolean Window::Create() {
 
 	return GL_TRUE;
 }
+
+void Window::DisplayFPS() const {
+	static GLfloat fps = 0.0f;
+	static GLfloat lastFrame = 0.0f;
+	GLfloat currentFrame = glfwGetTime();
+
+	++fps;
+
+	if (currentFrame - lastFrame > 1.0f) {
+		lastFrame = currentFrame;
+		
+		std::stringstream stream;
+		stream << m_Title << " - " << fps << " FPS";
+
+		glfwSetWindowTitle(m_Window, stream.str().c_str());
+		fps = 0;
+	}
+}

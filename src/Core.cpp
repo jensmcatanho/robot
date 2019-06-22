@@ -33,12 +33,12 @@ GLboolean Core::Setup() const {
 
 void Core::Run() {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
 	while (!m_Window->ShouldClose()) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		m_Window->SwapBuffers();
 		m_Window->PollEvents();
+		m_Window->DisplayFPS();
 	}
 
 	m_Window->Close();

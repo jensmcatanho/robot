@@ -9,7 +9,7 @@ class Window {
 
 		GLboolean Create();
 
-		GLFWwindow* GetPointer() const;
+		void DisplayFPS() const;
 
 		void PollEvents() const;
 
@@ -30,10 +30,6 @@ class Window {
 
 		GLfloat m_AspectRatio;
 };
-
-inline GLFWwindow* Window::GetPointer() const {
-	return m_Window;
-}
 
 inline void Window::PollEvents() const {
 	glfwPollEvents();
