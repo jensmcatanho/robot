@@ -5,7 +5,7 @@
 
 class IDrawable {
 	public:
-		virtual void Init(const GLchar*, const GLchar*) = 0;
+		virtual void Init(GLuint) = 0;
 
 		virtual void Draw(glm::mat4) const = 0;
 };
