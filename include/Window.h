@@ -1,9 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <string>
-
-#include "GLFW\glfw3.h"
+#include "Prerequisites.h"
 
 class Window {
 	public:

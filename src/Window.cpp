@@ -1,7 +1,5 @@
 #include "Window.h"
 
-#include <iostream>
-
 Window::Window(std::string title, GLint width, GLint height) :
 	m_Title(title),
 	m_Width(width),

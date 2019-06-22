@@ -3,8 +3,12 @@
 int main(int argc, char **argv) {
 	auto core = std::make_shared<Core>();
 
-	core->Setup();
+	if (!core->Setup()) {
+		std::cout << "Error: Failed to setup rendering." << std::endl;
+		return EXIT_FAILURE;
+	}
+
 	core->Run();
 
-	return 0;
+	return EXIT_SUCCESS;
 }
