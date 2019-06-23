@@ -1,5 +1,6 @@
 #include "Core.h"
 
+#include "Camera.h"
 #include "Cube.h"
 #include "Window.h"
 
@@ -9,7 +10,9 @@ Core::Core() :
 }
 
 GLboolean Core::Setup() const {
-	if (!m_Window->Create()) {
+	auto camera = std::shared_ptr<Camera>(new Camera(0.0f, 0.0f, 5.0f));
+
+	if (!m_Window->Create(camera)) {
 		std::cout << "Error: Window failed to be created." << std::endl;
 		return GL_FALSE;
 	}
@@ -39,14 +42,23 @@ void Core::Run() {
 	GLuint cubeProgram = LoadShaders("resources/cube.vert", "resources/cube.frag");
 	cube->Init(cubeProgram);
 
+	glm::mat4 viewMatrix;
+	glm::mat4 projectionMatrix;
+
 	while (!m_Window->ShouldClose()) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		cube->Draw(glm::mat4());
+		viewMatrix = m_Window->ViewMatrix();
+		projectionMatrix = m_Window->ProjectionMatrix();
 
+		cube->Draw(projectionMatrix * viewMatrix);
+
+		
 		m_Window->SwapBuffers();
 		m_Window->PollEvents();
-		m_Window->DisplayFPS();
+
+		GLdouble deltaTime = m_Window->DisplayFPS();
+		m_Window->ProcessInput(deltaTime);
 	}
 
 	m_Window->Close();

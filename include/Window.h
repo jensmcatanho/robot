@@ -3,13 +3,17 @@
 
 #include "Prerequisites.h"
 
+#include "Camera.h"
+
 class Window {
 	public:
 		Window(std::string title, GLint width, GLint height);
 
-		GLboolean Create();
+		GLboolean Create(std::shared_ptr<Camera>);
 
-		void DisplayFPS() const;
+		GLdouble DisplayFPS() const;
+
+		void ProcessInput(GLdouble) const;
 
 		void PollEvents() const;
 
@@ -19,8 +23,14 @@ class Window {
 
 		void Close();
 
+		glm::mat4 ViewMatrix() const;
+
+		glm::mat4 ProjectionMatrix() const;
+
 	private:
 		GLFWwindow *m_Window;
+
+		std::shared_ptr<Camera> m_Camera;
 
 		std::string m_Title;
 
@@ -46,6 +56,14 @@ inline GLboolean Window::ShouldClose() const {
 inline void Window::Close() {
 	glfwDestroyWindow(m_Window);
 	glfwTerminate();
+}
+
+inline glm::mat4 Window::ViewMatrix() const {
+	return m_Camera->ViewMatrix();
+}
+
+inline glm::mat4 Window::ProjectionMatrix() const {
+	return m_Camera->ProjectionMatrix(m_AspectRatio);
 }
 
 #endif

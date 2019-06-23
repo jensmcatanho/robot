@@ -64,5 +64,6 @@ void Mesh::Draw(glm::mat4 viewProjectionMatrix) const {
 	modelMatrix = glm::translate(modelMatrix, m_Position);
 	glm::mat4 mvpMatrix = viewProjectionMatrix * modelMatrix;
 
+	glUniformMatrix4fv(4, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 	glDrawElements(GL_TRIANGLES, m_NumIndices, GL_UNSIGNED_SHORT, (void *)0);
 }
