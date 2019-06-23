@@ -1,5 +1,7 @@
 #include "Mesh.h"
 
+#include "Texture.h"
+
 Mesh::Mesh() :
 	m_Position(0.0f, 0.0f, 0.0f) {
 
@@ -46,6 +48,9 @@ void Mesh::Init(GLuint shaderProgram) {
 	m_ShaderProgram = shaderProgram;
 	m_mvpUniformLocation = glGetUniformLocation(m_ShaderProgram, "u_mvpMatrix");
 
+	glUniform1i(glGetUniformLocation(m_ShaderProgram, "u_Material"), 0);
+	glUniform1i(glGetUniformLocation(m_ShaderProgram, "u_Material") + 1, 1);
+
 	glBindVertexArray(0);
 	glDeleteBuffers(1, &vbo);
 	glDeleteBuffers(1, &ebo);
@@ -60,6 +65,12 @@ void Mesh::Init(GLuint shaderProgram) {
 void Mesh::Draw(glm::mat4 viewProjectionMatrix) const {
 	glBindVertexArray(m_VAOHandler);
 	glUseProgram(m_ShaderProgram);
+
+	if (m_DiffuseMap)
+		m_DiffuseMap->Bind(GL_TEXTURE0);
+	
+	if (m_SpecularMap)
+		m_SpecularMap->Bind(GL_TEXTURE1);
 
 	glm::mat4 modelMatrix;
 	modelMatrix = glm::translate(modelMatrix, m_Position);

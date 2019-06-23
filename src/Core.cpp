@@ -1,7 +1,10 @@
 #include "Core.h"
 
+#include <stb_image\stb_image.h>
+
 #include "Camera.h"
 #include "Cube.h"
+#include "Texture.h"
 #include "Window.h"
 
 Core::Core() :
@@ -42,6 +45,18 @@ void Core::Run() {
 	GLuint cubeProgram = LoadShaders("resources/cube.vert", "resources/cube.frag");
 	cube->Init(cubeProgram);
 
+	auto texture = std::shared_ptr<Texture>(new Texture());
+	GLint width, height;
+	unsigned char* data = LoadTexture("resources/teste.jpg", &width, &height);
+	if (!data) {
+		std::cout << "Error: Texture failed to load." << std::endl;
+	}
+
+	texture->Init(data, width, height);
+	stbi_image_free(data);
+
+	cube->SetDiffuseMap(texture);
+	
 	glm::mat4 viewMatrix;
 	glm::mat4 projectionMatrix;
 
@@ -79,6 +94,15 @@ std::stringstream Core::ReadFile(std::string path) const {
 	}
 
 	return stringStream;
+}
+
+unsigned char* Core::LoadTexture(const std::string path, GLint* width, GLint* height) const {
+	GLint bytesPerPixel;
+
+	stbi_set_flip_vertically_on_load(1);
+	unsigned char* data = stbi_load(path.c_str(), width, height, &bytesPerPixel, 4);
+
+	return data;
 }
 
 GLuint Core::LoadShaders(const GLchar* vertexShaderPath, const GLchar* fragShaderPath) const {

@@ -14,6 +14,6 @@ uniform Material u_Material;
 out vec4 FragColor;
 
 void main() {
-	FragColor = vec4(vs_FragColor, 1.0);
-	//FragColor += texture(u_Material.diffuse, vs_TexCoord);
+	//FragColor = vec4(vs_FragColor, 1.0);
+	FragColor = texture(u_Material.diffuse, vs_TexCoord);
 }

@@ -16,6 +16,8 @@ class Core {
 
 		GLuint LoadShaders(const GLchar*, const GLchar*) const;
 
+		unsigned char* LoadTexture(const std::string, GLint*, GLint*) const;
+
 		std::shared_ptr<Window> m_Window;
 };
 
