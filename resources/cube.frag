@@ -1,4 +1,4 @@
-#version 430 core
+#version 330
 
 struct Material {
 	sampler2D diffuse;
@@ -9,7 +9,7 @@ struct Material {
 in vec3 vs_FragColor;
 in vec2 vs_TexCoord;
 
-layout(location = 6) uniform Material u_Material;
+uniform Material u_Material;
 
 out vec4 FragColor;
 

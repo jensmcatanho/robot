@@ -52,7 +52,6 @@ void Core::Run() {
 		projectionMatrix = m_Window->ProjectionMatrix();
 
 		cube->Draw(projectionMatrix * viewMatrix);
-
 		
 		m_Window->SwapBuffers();
 		m_Window->PollEvents();
@@ -126,10 +125,9 @@ GLuint Core::LoadShaders(const GLchar* vertexShaderPath, const GLchar* fragShade
 	glAttachShader(shaderProgram, fragShader);
 
 	glBindAttribLocation(shaderProgram, 0, "a_Position");
-	/*
 	glBindAttribLocation(shaderProgram, 1, "a_Normal");
 	glBindAttribLocation(shaderProgram, 2, "a_TexCoord");
-	*/
+
 	glLinkProgram(shaderProgram);
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &status);
 

@@ -31,6 +31,8 @@ class Mesh : public IDrawable {
 		GLuint m_ShaderProgram;
 
 		GLuint m_VAOHandler;
+
+		GLuint m_mvpUniformLocation;
 };
 
 #endif

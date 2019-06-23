@@ -34,6 +34,7 @@ GLboolean Window::Create(std::shared_ptr<Camera> camera) {
 	glfwSetFramebufferSizeCallback(m_Window, resizeCallback);
 	glfwSetCursorPosCallback(m_Window, mouseCallback);
 	glfwSetScrollCallback(m_Window, scrollCallback);
+	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	return GL_TRUE;
 }
